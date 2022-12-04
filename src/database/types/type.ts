@@ -13,7 +13,16 @@ export interface CustomError {
       createdAt: string;
       updatedAt: string;
     };
-  }
+  };
+
+  export interface IConfigurables {
+    dev: {
+        [key: string]: string;
+    },
+    prod: {
+        [key: string]:  string;
+    }
+}
 
   export interface signUpPayload {
     email: string,

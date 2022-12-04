@@ -10,7 +10,7 @@ router.put("/auth/signup", authValidator.signup, validationHandler , AuthControl
 router.post("/auth/login", authValidator.login, AuthController.login);
 
 router.put(
-  "/passwordReset",
+  "/auth/passwordReset",
   authValidator.passwordReset,
   AuthController.passwordReset
 );

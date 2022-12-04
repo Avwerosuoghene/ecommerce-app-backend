@@ -1,17 +1,27 @@
 import mongoose from "mongoose";
-import express from "express";
-const app = express();
+import { configuration } from "../config/appconfig";
+import dotenv from "dotenv";
+import {IConfigurables} from "../database/types/type"
 
-export const connectDb = async () => {
-  try {
-    await mongoose.connect(
-      "mongodb+srv://kesuion:auth-08-finished@cluster0.2dtoywh.mongodb.net/speaker_app?retryWrites=true"
-    );
-    app.listen(8000);
-  } catch (err) {
-    console.log(err);
-    process.exit(1);
-  }
-};
+dotenv.config();
 
-// export default connectDb
+const nodeEnv = process.env.NODE_ENV!;
+const mongodbURI = configuration[nodeEnv as keyof IConfigurables].mongoUrl
+
+
+
+
+export const connectDb = (async () => {
+    try {
+      await mongoose.connect(
+        mongodbURI
+      );
+      console.log('Mongo db connected');
+        
+    } catch (err) {
+      console.log(err);
+      process.exit(1);
+    }
+  })
+
+// export default functionCall

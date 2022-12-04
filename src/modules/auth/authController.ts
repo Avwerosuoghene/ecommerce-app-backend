@@ -7,17 +7,6 @@ import { AuthService } from "./authService";
 
 export class AuthController {
     static signup(req: Request, res: Response, next: NextFunction) {
-    //   const email = req.body.email;
-    //   const password = req.body.password;
-    //   const name = req.body.name;
-  
-    //   const errors = validationResult(req);
-    //   if (!errors.isEmpty()) {
-    //     const error = new ModError("Validation failed");
-    //     error.statusCode = 422;
-    //     error.data = errors.array();
-    //     throw error;
-    //   }
   
     console.log('here');
       (async () => {
@@ -25,9 +14,7 @@ export class AuthController {
          
          const {message, id} = await  AuthService.signUp(req.body);
          return succesHandler(res, 201, message, id)
-        //   res
-        //     .status(201)
-        //     .json({ message: message, userId: id });
+
         } catch (err: any) {
           if (!err.statusCode) {
             err.statusCode = 500;
@@ -42,20 +29,11 @@ export class AuthController {
       const email = req.body.email;
       const password = req.body.password;
   
-    //   const errors = validationResult(req);
-    //   if (!errors.isEmpty()) {
-    //     const error = new ModError("Validation failed");
-    //     error.statusCode = 422;
-    //     error.data = errors.array();
-    //     throw error;
-    //   }
   
       try {
-        const {message, id} = await AuthService.login(req.body);
-        return succesHandler(res, 200, message, id)
-        // res
-        //   .status(200)
-        //   .json({ message: message, userId: id });
+        const {message, id, token} = await AuthService.login(req.body);
+        const loginData = {token: token, id: id}
+        return succesHandler(res, 200, message, loginData)
       } catch (err: any) {
         if (!err.statusCode) {
           err.statusCode = 500;
@@ -68,14 +46,6 @@ export class AuthController {
       const email = req.body.email;
       const password = req.body.password;
       const confirmPassword = req.body.confirmPassword;
-  
-    //   const errors = validationResult(req);
-    //   if (!errors.isEmpty()) {
-    //     const error = new ModError("Validation failed");
-    //     error.statusCode = 422;
-    //     error.data = errors.array();
-    //     throw error;
-    //   }
   
       if (password !== confirmPassword) {
         const error = new ModError("Password mismatch");

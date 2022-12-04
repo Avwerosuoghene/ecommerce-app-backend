@@ -1,7 +1,25 @@
+import  jwt  from "jsonwebtoken";
+import nodemailer from "nodemailer";
 import { User } from "../../database/models";
-import user from "../../database/models/user";
 import { logingPayload, ModError, resetPassPayload, signUpPayload, UserI } from "../../database/types/type";
 import { comparePassword, hashPassword } from "../../helpers/auth";
+import { configuration } from "../../config/appconfig";
+import dotenv from "dotenv";
+import {IConfigurables} from "../../database/types/type"
+
+dotenv.config();
+
+const nodeEnv = process.env.NODE_ENV!;
+const nodeMailerEmail = configuration[nodeEnv as keyof IConfigurables]. nodemailer_mail
+const nodeMailerPass = configuration[nodeEnv as keyof IConfigurables].nodemailer_pass
+
+let transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: nodeMailerEmail,
+      pass: nodeMailerPass,
+    },
+  });
 
 export class AuthService {
      static async signUp   (signupPayload: signUpPayload): Promise<{message: string, id: string} >  {
@@ -20,7 +38,7 @@ export class AuthService {
           }
     };
 
-    static async login (loginPayload: logingPayload): Promise<{message: string, id: string} >  {
+    static async login (loginPayload: logingPayload): Promise<{message: string, id: string, token: string} >  {
         const {email, password} = loginPayload
         const user = await User.findOne({ email: email });
   
@@ -36,15 +54,19 @@ export class AuthService {
           throw error;
         }
 
+        const token = jwt.sign({email: email, id: user._id.toString()},'somesupersecretsecret', {expiresIn: '1h'})
+        
+
         return {
             message: "Login succesful",
-            id: user._id
+            id: user._id,
+            token: token
           }
     };
 
     static async passwordReset (resetPassPayload: resetPassPayload): Promise<{message: string, id: string | undefined} >  {
 
-        const {email, password, confirmPassword} = resetPassPayload;
+        const {email, password} = resetPassPayload;
         const hashedPw = await hashPassword(password, 12);
         const user = User.findOne({ email: email });
   
@@ -58,6 +80,25 @@ export class AuthService {
           { password: hashedPw },
           { new: true }
         );
+
+
+        transporter.sendMail(
+            {
+              from: nodeMailerEmail,
+              to: email,
+              subject: "Password reset",
+              html: `
+          <p>Password reset succesful</p> `,
+            },
+            function (error, info) {
+              if (error) {
+                console.log(error);
+                throw error
+              } else {
+                console.log("Email sent: " + info.response);
+              }
+            }
+          );
 
         return {
             message: "Password reset succesful",
