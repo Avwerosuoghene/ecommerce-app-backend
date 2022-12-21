@@ -10,6 +10,7 @@ const validationHandler = (req: Request, res: Response, next: NextFunction) => {
       error.data = errors.array();
       throw error;
     }
+    next();
 }
 
 export default validationHandler;

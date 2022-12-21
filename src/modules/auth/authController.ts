@@ -8,12 +8,11 @@ import { AuthService } from "./authService";
 export class AuthController {
     static signup(req: Request, res: Response, next: NextFunction) {
   
-    console.log('here');
       (async () => {
         try {
          
          const {message, id} = await  AuthService.signUp(req.body);
-         return succesHandler(res, 201, message, id)
+         return succesHandler(res, 201, message, id, true);
 
         } catch (err: any) {
           if (!err.statusCode) {
@@ -33,7 +32,7 @@ export class AuthController {
       try {
         const {message, id, token} = await AuthService.login(req.body);
         const loginData = {token: token, id: id}
-        return succesHandler(res, 200, message, loginData)
+        return succesHandler(res, 200, message, loginData, true)
       } catch (err: any) {
         if (!err.statusCode) {
           err.statusCode = 500;
@@ -56,11 +55,12 @@ export class AuthController {
       
   
       try {
-        const {message, id } = await AuthService.passwordReset(req.body)
+        const {message, id, isSuccess } = await AuthService.passwordReset(req.body)
         
-        res
-        .status(200)
-        .json({ message: message, userId: id});
+        // res
+        // .status(200)
+        // .json({ message: message, userId: id, isSuccess: isSuccess});
+        return succesHandler(res, 200, message, id, true)
       } catch (err: any) {
         if (!err.statusCode) {
           err.statusCode = 500;

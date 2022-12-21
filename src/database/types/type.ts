@@ -24,22 +24,22 @@ export interface CustomError {
     }
 }
 
-  export interface signUpPayload {
-    email: string,
-    password: string,
-    name: string
+export interface logingPayload {
+  email: string,
+  password: string,
+}
+
+  export interface signUpPayload  extends logingPayload {
+    name: string,
+    userType? : string
   }
 
-  export interface logingPayload {
-    email: string,
-    password: string,
-  }
 
-  export interface resetPassPayload {
-    email: string,
-    password: string,
+
+  export interface resetPassPayload extends logingPayload {
     confirmPassword: string
   }
+
   
   export class ModError extends Error {
     status = 400;
@@ -53,4 +53,5 @@ export interface CustomError {
     data: any;
     statusCode: number | undefined;
   }
+  
   
