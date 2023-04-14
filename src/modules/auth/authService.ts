@@ -1,7 +1,7 @@
 import  jwt  from "jsonwebtoken";
 import nodemailer from "nodemailer";
 import { User } from "../../database/models";
-import { logingPayload, ModError, resetPassPayload, signUpPayload, UserI } from "../../database/types/type";
+import { isLoginIsSuccessI, isSuccessI, logingPayload, ModError, resetPassPayload, signUpPayload, UserI } from "../../database/types/type";
 import { comparePassword, hashPassword } from "../../helpers/auth";
 import { configuration } from "../../config/appconfig";
 import dotenv from "dotenv";
@@ -24,7 +24,7 @@ let transporter = nodemailer.createTransport({
   });
 
 export class AuthService {
-     static async signUp   (signupPayload: signUpPayload): Promise<{message: string, id: string, isSuccess: boolean} >  {
+     static async signUp   (signupPayload: signUpPayload): Promise<isSuccessI>  {
         const {email, password, name, userType} = signupPayload
         const hashedPw = await hashPassword(password, 12);
         let reqUserType;
@@ -45,11 +45,11 @@ export class AuthService {
           return {
             message: "User created succesfully",
             id: result._id,
-            isSuccess: true
+            isSuccess: true,
           }
     };
 
-    static async login (loginPayload: logingPayload): Promise<{message: string, id: string, token: string, isSuccess: boolean} >  {
+    static async login (loginPayload: logingPayload): Promise<isLoginIsSuccessI>  {
         const {email, password} = loginPayload
         const user = await User.findOne({ email: email });
   
@@ -65,18 +65,19 @@ export class AuthService {
           throw error;
         }
 
-        const token = jwt.sign({email: email, id: user._id.toString()},jwtSecret, {expiresIn: '1h'})
+        const token = jwt.sign({email: email, id: user._id.toString()},jwtSecret, {expiresIn: '30min'})
         
 
         return {
             message: "Login succesful",
             id: user._id,
             isSuccess: true,
-            token: token
+            token: token,
+            userType: user.userType
           }
     };
 
-    static async passwordReset (resetPassPayload: resetPassPayload): Promise<{message: string, id: string | undefined, isSuccess: boolean} >  {
+    static async passwordReset (resetPassPayload: resetPassPayload): Promise<isSuccessI >  {
 
         const {email, password} = resetPassPayload;
         const hashedPw = await hashPassword(password, 12);
@@ -114,7 +115,7 @@ export class AuthService {
 
         return {
             message: "Password reset succesful",
-            id: modifiedUser?._id,
+            id: modifiedUser!._id,
             isSuccess: true,
         }
     }

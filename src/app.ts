@@ -7,6 +7,7 @@ import { CustomError } from "./database/types/type";
 import modules from "./modules";
 import headerSetter from "./middleware/setHeaders";
 import {connectDb} from "./database/db";
+import multer from "multer";
 
 
 const app = express();
@@ -15,6 +16,33 @@ const app = express();
 app.use(bodyParser.json());
 
 app.use(headerSetter);
+
+const fileStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "images");
+  },
+
+  filename: (req, file, cb) => {
+    cb(null, new Date().toISOString() + "-" + file.originalname);
+  },
+});
+
+const fileFilter = (req :Request, file: any, cb:any) => {
+  if (
+    file.mimetype === "image/png" ||
+    file.mimetype === "image/jpg" ||
+    file.mimetype === "image/jpeg"
+  ) {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+
+
+app.use(
+  multer({ storage: fileStorage, fileFilter: fileFilter }).single("image")
+);
 
 
 modules(app);

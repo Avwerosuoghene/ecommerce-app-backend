@@ -7,7 +7,11 @@ const validationHandler = (req: Request, res: Response, next: NextFunction) => {
     if (!errors.isEmpty()) {
       const error = new ModError("Validation failed");
       error.statusCode = 422;
-      error.data = errors.array();
+
+      error.data = errors.array().map(err => {
+        return {message: err.msg, field: err.param}
+      });
+      // error.data = errors.array();
       throw error;
     }
     next();

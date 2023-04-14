@@ -7,11 +7,12 @@ const router = Router();
 
 router.put("/auth/signup", authValidator.signup, validationHandler , AuthController.signup);
 
-router.post("/auth/login", authValidator.login, AuthController.login);
+router.post("/auth/login", authValidator.login,validationHandler , AuthController.login);
 
 router.put(
   "/auth/passwordReset",
   authValidator.passwordReset,
+  validationHandler,
   AuthController.passwordReset
 );
 

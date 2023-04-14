@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import { UserI } from '../types/type';
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema({
+const userSchema = new Schema<UserI>({
     email: {
         type: String,
         required: true
