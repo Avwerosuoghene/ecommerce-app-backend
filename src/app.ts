@@ -1,19 +1,21 @@
 import express, { Request, Response, NextFunction } from "express";
 import bodyParser from "body-parser";
 import session from 'express-session'
+import path from "path";
 
 
-import { CustomError } from "./database/types/type";
 import modules from "./modules";
 import headerSetter from "./middleware/setHeaders";
 import {connectDb} from "./database/db";
 import multer from "multer";
+import { CustomError } from "./database/types/handlers";
 
 
 const app = express();
 
 
 app.use(bodyParser.json());
+app.use('/images', express.static(path.join(__dirname, '../images')));
 
 app.use(headerSetter);
 
@@ -51,7 +53,7 @@ app.use(session({secret: 'my secret', resave: false, saveUninitialized: false}))
 
 
 app.use((error:   CustomError, req: Request, res: Response, next: NextFunction) => {
-
+  // console.log(error)
   const status = error.statusCode || 500;
   const message = error.message;
   const data = error.data;

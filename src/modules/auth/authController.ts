@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { ModError } from "../../database/types/type";
+import { ModError } from "../../database/types/handlers";
 import { succesHandler } from "../../helpers/responseHandler";
 import { AuthService } from "./authService";
 

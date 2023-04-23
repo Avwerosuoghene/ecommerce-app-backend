@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { ProductI } from "../types/type";
+import { ProductI } from "../types/models";
 const Schema = mongoose.Schema;
 
 const productSchema = new Schema<ProductI>(
@@ -20,6 +20,10 @@ const productSchema = new Schema<ProductI>(
       type: String,
       required: true,
     },
+    featuresDescription: {
+      type: String,
+      required: true,
+    },
     features: [
       {
         name: {
@@ -32,17 +36,25 @@ const productSchema = new Schema<ProductI>(
         },
       },
     ],
-    imageUrl: {
-        type: String,
-        required: true
+    image: {
+      type: String,
+      required: true,
     },
     userId: {
-        type: Schema.Types.ObjectId,
-        required: true,
-        ref: 'User'
-      },
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
+    rating: {
+      type: Number,
+      required: true,
+    },
+    reviews: {
+      type: Number,
+      required: true,
+    },
   },
- 
+
   {
     timestamps: { createdAt: "createdAt", updatedAt: "updatedAt" },
   }

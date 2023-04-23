@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { configuration } from "../config/appconfig";
 import dotenv from "dotenv";
-import {IConfigurables} from "../database/types/type"
+import { IConfigurables } from "./types/models";
 
 dotenv.config();
 

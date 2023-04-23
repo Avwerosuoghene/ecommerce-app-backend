@@ -2,9 +2,9 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 import dotenv from "dotenv";
 
 import { Request, Response, NextFunction } from "express";
-import { ModError } from "../database/types/type";
 import { configuration } from "../config/appconfig"
-import {IConfigurables} from "../database/types/type"
+import { IConfigurables } from "../database/types/models";
+import { ModError } from "../database/types/handlers";
 
 dotenv.config();
 

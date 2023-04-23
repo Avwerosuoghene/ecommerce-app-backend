@@ -1,5 +1,6 @@
 declare namespace Express {
     export interface Request {
-        currentUser?: currentUserI
+        currentUser?: currentUserI,
+        file?: Express.Multer.File 
     }
 }

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { validationResult } from "express-validator";
-import { ModError } from "../database/types/type";
+import { ModError } from "../database/types/handlers";
 
 const validationHandler = (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
@@ -11,7 +11,6 @@ const validationHandler = (req: Request, res: Response, next: NextFunction) => {
       error.data = errors.array().map(err => {
         return {message: err.msg, field: err.param}
       });
-      // error.data = errors.array();
       throw error;
     }
     next();

@@ -1,12 +1,12 @@
 import  jwt  from "jsonwebtoken";
 import nodemailer from "nodemailer";
-import { User } from "../../database/models";
-import { isLoginIsSuccessI, isSuccessI, logingPayload, ModError, resetPassPayload, signUpPayload, UserI } from "../../database/types/type";
 import { comparePassword, hashPassword } from "../../helpers/auth";
 import { configuration } from "../../config/appconfig";
 import dotenv from "dotenv";
-import {IConfigurables} from "../../database/types/type"
-import e from "express";
+import { IConfigurables, UserI } from "../../database/types/models";
+import { User } from "../../database/models";
+import { logingPayload, signUpPayload, resetPassPayload } from "../../database/types/payloads";
+import { isSuccessI, isLoginIsSuccessI, ModError } from "../../database/types/handlers";
 
 dotenv.config();
 
@@ -65,7 +65,7 @@ export class AuthService {
           throw error;
         }
 
-        const token = jwt.sign({email: email, id: user._id.toString()},jwtSecret, {expiresIn: '30min'})
+        const token = jwt.sign({email: email, id: user._id.toString()},jwtSecret, {expiresIn: '3hr'})
         
 
         return {

@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import { IConfigurables } from "../database/types/type";
+import { IConfigurables } from "../database/types/models";
 
 dotenv.config();
 
