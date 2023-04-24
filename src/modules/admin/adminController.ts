@@ -7,7 +7,7 @@ export class AdminController {
     (async () => {
 
       try {
-        const featuresArray = JSON.parse(req.body.features)
+        const featuresArray = JSON.parse(req.body.features);
         const { message, id } = await AdminService.postProduct(
           req.body,
           req!.file,
@@ -25,18 +25,45 @@ export class AdminController {
     })();
   }
 
-  // static getProducts(req: Request, res: Response, next: NextFunction) {
-  // (  async() => {
-  //     try {
-  //       const {message, isSuccess, data} = await AdminService.getProducts();
-  //       return succesHandler(res, 200, message, data, isSuccess);
-  //     } catch (err: any) {
-  //       if (!err.statusCode) {
-  //         err.statusCode = 500;
-  //       }
+  static editProduct(req: Request, res: Response, next: NextFunction) {
+  (  async() => {
+      try {
+        const featuresArray = JSON.parse(req.body.features);
+        const productId = req.params.id;
+        const { message, id } = await AdminService.editProduct(
+          req.body,
+          req!.file,
+          req.currentUser,
+          featuresArray,
+          productId
+        );
+        return succesHandler(res, 201, message, id, true);
+      } catch (err: any) {
+        if (!err.statusCode) {
+          err.statusCode = 500;
+        }
 
-  //       next(err);
-  //     }
-  //   })();
-  // }
+        next(err);
+      }
+    })();
+  }
+
+  static deleteProduct(req: Request, res: Response, next: NextFunction) {
+    (  async() => {
+        try {
+          const productId = req.params.id;
+          const { message, id } = await AdminService.deleteProduct(
+            req.currentUser,
+            productId
+          );
+          return succesHandler(res, 200, message, id, true);
+        } catch (err: any) {
+          if (!err.statusCode) {
+            err.statusCode = 500;
+          }
+  
+          next(err);
+        }
+      })();
+    }
 }

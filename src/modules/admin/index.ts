@@ -6,12 +6,20 @@ import { AdminController } from "./adminController";
 
 const router = Router();
 
-router.post("/admin/products",verifyToken, adminValidator.postProduct,validationHandler,AdminController.postProduct  );
-// router.get("/admin/products", AdminController.getProducts  );
-
-
-
-
-
+router.post(
+  "/admin/products",
+  verifyToken,
+  adminValidator.postProduct,
+  validationHandler,
+  AdminController.postProduct
+);
+router.put(
+  "/admin/product/:id",
+  verifyToken,
+  adminValidator.editProduct,
+  validationHandler,
+  AdminController.editProduct
+);
+router.delete("/admin/product/:id", verifyToken, AdminController.deleteProduct);
 
 export default router;
