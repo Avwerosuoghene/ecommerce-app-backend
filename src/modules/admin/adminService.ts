@@ -35,27 +35,27 @@ export class AdminService {
          }
    };
 
-   static async getProducts(): Promise<getRequestSuccess<getProductsResponse> > {
+   // static async getProducts(): Promise<getRequestSuccess<getProductsResponse> > {
 
-      const products = await Product.find();
+   //    const products = await Product.find();
 
 
-      if (!products) {
-         const error = new ModError("No product found");
-         error.statusCode = 404;
-         throw error;
-        }
+   //    if (!products) {
+   //       const error = new ModError("No product found");
+   //       error.statusCode = 404;
+   //       throw error;
+   //      }
 
-        const productDisplay: Array<{title: string, image: string, price: number, _id: string, rating: number, reviews: number}> = products.map(product => {
-         return {title: product.title, image: product.image, price: product.price, _id: product._id, rating: product.rating, reviews: product.reviews}
-        })
+   //      const productDisplay: Array<{title: string, image: string, price: number, _id: string, rating: number, reviews: number}> = products.map(product => {
+   //       return {title: product.title, image: product.image, price: product.price, _id: product._id, rating: product.rating, reviews: product.reviews}
+   //      })
 
-      return {
-         message: "Products fetched succesfully",
-         isSuccess: true,
-         data: productDisplay
-       }
-   }
+   //    return {
+   //       message: "Products fetched succesfully",
+   //       isSuccess: true,
+   //       data: productDisplay
+   //     }
+   // }
 
   
 }

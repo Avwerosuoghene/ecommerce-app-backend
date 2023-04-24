@@ -25,18 +25,18 @@ export class AdminController {
     })();
   }
 
-  static getProducts(req: Request, res: Response, next: NextFunction) {
-  (  async() => {
-      try {
-        const {message, isSuccess, data} = await AdminService.getProducts();
-        return succesHandler(res, 200, message, data, isSuccess);
-      } catch (err: any) {
-        if (!err.statusCode) {
-          err.statusCode = 500;
-        }
+  // static getProducts(req: Request, res: Response, next: NextFunction) {
+  // (  async() => {
+  //     try {
+  //       const {message, isSuccess, data} = await AdminService.getProducts();
+  //       return succesHandler(res, 200, message, data, isSuccess);
+  //     } catch (err: any) {
+  //       if (!err.statusCode) {
+  //         err.statusCode = 500;
+  //       }
 
-        next(err);
-      }
-    })();
-  }
+  //       next(err);
+  //     }
+  //   })();
+  // }
 }

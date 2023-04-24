@@ -28,4 +28,5 @@ export interface logingPayload {
   }
 
   export type getProductsResponse = Array <Pick<ProductI, "title" | "image" | "price" | "_id" | "rating" | "reviews">>
+  export type getProductById = Omit<ProductI,"userId"|"timestamps" >
   
