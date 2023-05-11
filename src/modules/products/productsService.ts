@@ -73,14 +73,14 @@ export class ProductsService {
     };
 
     return {
-      message: "Products fetched succesfully",
+      message: "Product fetched succesfully",
       isSuccess: true,
       data: productDisplay,
     };
   }
 
   static async getProductByUserId(
-    id: string
+    id: any
   ): Promise<getRequestSuccess<getProductsResponse>> {
     const products = await Product.find({ userId: id });
 

@@ -1,5 +1,6 @@
 import { configuration } from "./config/appconfig";
 import dotenv from "dotenv";
+import https from 'https';
 
 dotenv.config();
 

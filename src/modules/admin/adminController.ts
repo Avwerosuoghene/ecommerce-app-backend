@@ -4,8 +4,9 @@ import { AdminService } from "./adminService";
 
 export class AdminController {
   static postProduct(req: Request, res: Response, next: NextFunction) {
-    (async () => {
 
+    (async () => {
+      // console.log('here')
       try {
         const featuresArray = JSON.parse(req.body.features);
         const { message, id } = await AdminService.postProduct(
@@ -50,6 +51,8 @@ export class AdminController {
 
   static deleteProduct(req: Request, res: Response, next: NextFunction) {
     (  async() => {
+
+
         try {
           const productId = req.params.id;
           const { message, id } = await AdminService.deleteProduct(

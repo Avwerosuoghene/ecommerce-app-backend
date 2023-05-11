@@ -37,9 +37,10 @@ export class ProductsController {
 
   static getProductsByUserId (req: Request, res: Response, next: NextFunction) {
     (async () =>  {
+        // console.log( req.query.userId)
         try {
             const { message, isSuccess, data } =
-            await ProductsService.getProductByUserId(req.currentUser.id);
+            await ProductsService.getProductByUserId(req.query.userId);
           return succesHandler(res, 200, message, data, isSuccess);
         } catch(err: any) {
             if (!err.statusCode) {

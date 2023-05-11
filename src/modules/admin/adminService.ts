@@ -11,6 +11,7 @@ export class AdminService {
     static async postProduct   (postProductPayload: postProductPayload, uploadedFile: any | undefined, currentUser: currentUserI, featuresArray: Array<{}>): Promise<isSuccessI >  {
        const {title, price, category, description, featuresDescription} = postProductPayload
        if (!uploadedFile) {
+    
         const error = new ModError("Invalid file provided");
         error.statusCode = 500;
         throw error;
@@ -49,7 +50,7 @@ export class AdminService {
       throw error;
     };
 
-    if (currentUser !== product.userId) {
+    if (currentUser.id !== product.userId.toString()) {
       const error = new ModError("Not Authorized");
       error.statusCode = 403;
       throw error;
@@ -86,8 +87,9 @@ export class AdminService {
      error.statusCode = 404;
      throw error;
    };
-
-   if (currentUser !== product.userId) {
+console.log(product.userId.toString())
+console.log(currentUser.id)
+   if (currentUser.id !== product.userId.toString()) {
       const error = new ModError("Not Authorized");
       error.statusCode = 403;
       throw error;
