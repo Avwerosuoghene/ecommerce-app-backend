@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import { IConfigurables } from "../database/types/models";
 
-dotenv.config();
+dotenv.config({ path: `${process.env.NODE_ENV}.env` });
 
 
 

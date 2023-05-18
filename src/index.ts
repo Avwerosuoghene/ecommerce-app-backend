@@ -10,4 +10,6 @@ const port = parseInt(configuration[nodeEnv as keyof IConfigurables].port)
 import app from "./app";
 import { IConfigurables } from "./database/types/models";
 
-app.listen(port)
+app.listen(port,  () => {
+    console.log('Listening on port ' + port + '!!!');
+})

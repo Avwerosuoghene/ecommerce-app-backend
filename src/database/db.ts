@@ -12,11 +12,12 @@ const mongodbURI = configuration[nodeEnv as keyof IConfigurables].mongoUrl
 
 
 export const connectDb = (async () => {
+
     try {
       await mongoose.connect(
         mongodbURI
       );
-      console.log('Mongo db connected');
+      console.log('Mongo db connected' );
         
     } catch (err) {
       console.log(err);

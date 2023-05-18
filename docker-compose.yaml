@@ -1,0 +1,17 @@
+version: "3.3"
+
+services: 
+  api:
+    image: "kesuion/ecommerce-backend-app"
+    container_name: ecommerce-backend-app
+    hostname: localhost
+    init: true
+    ports:
+      - "4000:9000"
+    # volumes:
+    #   - type: bind
+    #     source: ./ecommerce-store-backend
+    #     target: /app
+    #     read_only: false
+    expose:
+      - "4000"
