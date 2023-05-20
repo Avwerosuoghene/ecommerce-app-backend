@@ -53,6 +53,8 @@ jobs:
             
             #pull and run docker container 
             docker run -p 9000:9000 kesuion/ecommerce-backend-app
+            
+            exit
           
       
       
