@@ -39,14 +39,17 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
-            #stops all docker containers
-            docker kill $(docker ps -q)
+            #cd into app dir
+            cd ecommerce-backend
             
-            #remove all containers
-            docker rm $(docker ps -a -q)
+            #stops running container for app
+            docker kill $(docker ps -q --filter ancestor=kesuion/ecommerce-backend-app)
             
-            #removes all images
-            docker rmi $(docker images -q)
+            #remove specified container based on image name
+            docker rm $(docker ps -a -q --filter ancestor=kesuion/ecommerce-backend-app)
+            
+            #removes specified image
+            docker rmi $(docker images --format "{{.ID}}" kesuion/ecommerce-backend-app) 
             
             #pull and run docker container 
             docker run -p 9000:9000 kesuion/ecommerce-backend-app
