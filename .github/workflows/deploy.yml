@@ -43,7 +43,19 @@ jobs:
             cd ecommerce-backend
             
             #stops running container for app
-            docker kill $(docker ps -q --filter ancestor=kesuion/ecommerce-backend-app)
+            #docker kill $(docker ps -q --filter ancestor=kesuion/ecommerce-backend-app)
+            
+            #enter docker container and stop pm2 run-time
+            docker docker exec -it $(docker ps -q --filter ancestor=kesuion/ecommerce-backend-app) sh
+            
+            #stop running pm2 process
+            docker kill pm2 app
+            
+            #delete all pm2 instance
+            pm2 delete all
+            
+            #exit container
+            exit
             
             #remove specified container based on image name
             docker rm $(docker ps -a -q --filter ancestor=kesuion/ecommerce-backend-app)
