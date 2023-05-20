@@ -56,10 +56,10 @@ jobs:
             
             #delete all pm2 instance
             pm2 delete all
-            
+            fi  
             #exit container
             exit; 
-            fi  
+
             
             #remove specified container based on image name
             docker rm $(docker ps -a -q --filter ancestor=kesuion/ecommerce-backend-app)
