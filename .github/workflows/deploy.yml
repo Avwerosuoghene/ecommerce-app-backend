@@ -1,0 +1,63 @@
+name: deploy-app
+
+on: 
+  push: 
+    branches:
+      - main
+
+jobs:
+
+  build:
+  
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout files
+        uses: actions/checkout@v2
+        
+      - name: Buld and push Docker images
+        uses: docker/build-push-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME}}
+          password: ${{ secrets.DOCKER_PASSWORD}}
+          repository: kesuion/ecommerce-backend-app
+          
+  deploy:
+#runs once build is completed
+    needs: build
+    
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout files
+        uses: actions/checkout@v2
+        
+      - name: ssh into server using password
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            #stops all docker containers
+            docker kill $(docker ps -q)
+            
+            #remove all containers
+            docker rm $(docker ps -a -q)
+            
+            #removes all images
+            docker rmi $(docker images -q)
+            
+            #pull and run docker container 
+            docker run -p 9000:9000 kesuion/ecommerce-backend-app
+          
+      
+      
+          
+      
+#       - run: docker build -t kesuion/ecommerce-backend-app .
+#       - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+#         env:
+#           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME}}
+#           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD}}
+#       - run: docker push kesuion/ecommerce-backend-app
