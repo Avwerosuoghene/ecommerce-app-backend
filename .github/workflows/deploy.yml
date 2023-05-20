@@ -46,7 +46,7 @@ jobs:
             #docker kill $(docker ps -q --filter ancestor=kesuion/ecommerce-backend-app)
             
             #enter docker container and stop pm2 run-time
-            docker docker exec -it $(docker ps -q --filter ancestor=kesuion/ecommerce-backend-app) sh
+            docker exec -it $(docker ps -q --filter ancestor=kesuion/ecommerce-backend-app) sh
             
             #stop running pm2 process
             docker kill pm2 app
