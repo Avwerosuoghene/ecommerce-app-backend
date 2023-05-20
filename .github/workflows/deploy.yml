@@ -45,7 +45,7 @@ jobs:
             #stops running container for app
             #docker kill $(docker ps -q --filter ancestor=kesuion/ecommerce-backend-app)
             
-            echo docker ps -q --filter ancestor=kesuion/ecommerce-backend-app
+            echo "docker ps -q --filter ancestor=kesuion/ecommerce-backend-app"
             
             if [ docker ps -q --filter ancestor=kesuion/ecommerce-backend-app]
             then
