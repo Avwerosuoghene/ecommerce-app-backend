@@ -24,3 +24,4 @@ EXPOSE 9000
 
 # Start the application
 CMD ["npm","run", "start-pm2"]
+
