@@ -7,6 +7,7 @@ WORKDIR /usr/src/app
 # Copy the package.json and package-lock.json files to the container
 COPY package.json .
 
+
 # This ensures dev dependencies are not run on our docker image creation
 RUN npm install 
 
