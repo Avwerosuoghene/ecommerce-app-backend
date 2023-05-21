@@ -82,6 +82,7 @@ jobs:
             #pull and run docker container . The -d flag ensures docker runs in the background
             docker run -p 9000:9000 -d kesuion/ecommerce-backend-app
             
+            
             exit
           
       
