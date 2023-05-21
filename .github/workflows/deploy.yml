@@ -41,7 +41,7 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
             #cd into app dir
-            cd ecommerce-backend
+            #cd ecommerce-backend
             
             #stops running container for app
             #docker kill $(docker ps -q --filter ancestor=kesuion/ecommerce-backend-app)
@@ -69,7 +69,7 @@ jobs:
             #exit container
             #exit
             fi    
-            
+
 
 
             #removes specified image
