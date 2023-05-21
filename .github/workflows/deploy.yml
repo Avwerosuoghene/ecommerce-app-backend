@@ -69,6 +69,7 @@ jobs:
             #exit container
             #exit
             fi  
+            
 
             #removes specified image
             docker rmi $(docker images --format "{{.ID}}" kesuion/ecommerce-backend-app) 
