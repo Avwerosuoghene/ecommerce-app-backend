@@ -47,21 +47,32 @@ jobs:
             #docker kill $(docker ps -q --filter ancestor=kesuion/ecommerce-backend-app)
             
             ACTIVE_CONTAINER=$(docker ps -q --filter ancestor=kesuion/ecommerce-backend-app)
-            if [ "$ACTIVE_CONTAINER" != "" ]; then  
+            if [ "$ACTIVE_CONTAINER" != "" ]; then 
+
+            docker kill $(docker ps -q --filter ancestor=kesuion/ecommerce-backend-app)
+
+            #remove specified container based on image name
+            docker rm $(docker ps -a -q --filter ancestor=kesuion/ecommerce-backend-app)
+            
+            
             echo "yes"
+            
             #enter docker container and stop pm2 run-time
-            docker exec -it $(docker ps -q --filter ancestor=kesuion/ecommerce-backend-app) sh
+            #docker exec -it $(docker ps -q --filter ancestor=kesuion/ecommerce-backend-app) sh
             
             #stop running pm2 process
-            docker kill pm2 app
+            #docker kill pm2 app
             
             #delete all pm2 instance
-            pm2 delete all
-            exit
-            fi  
+            #pm2 delete all
+
             #exit container
             #exit
+            fi  
+           
 
+            #removes specified image
+            docker rmi $(docker images --format "{{.ID}}" kesuion/ecommerce-backend-app) 
             
             #remove specified container based on image name
             docker rm $(docker ps -a -q --filter ancestor=kesuion/ecommerce-backend-app)
