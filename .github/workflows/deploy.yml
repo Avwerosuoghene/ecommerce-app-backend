@@ -70,7 +70,7 @@ jobs:
             docker rmi $(docker images --format "{{.ID}}" kesuion/ecommerce-backend-app) 
             
             #pull and run docker container 
-            docker run -p 9000:9000 kesuion/ecommerce-backend-app
+            docker run -p 9000:9000 -d kesuion/ecommerce-backend-app
             
             exit
           

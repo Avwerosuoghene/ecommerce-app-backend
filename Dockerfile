@@ -9,7 +9,7 @@ COPY package.json .
 
 
 # This ensures dev dependencies are not run on our docker image creation
-RUN npm install --only=prod
+RUN npm install 
 
 # Install PM2 globally
 RUN npm install -g pm2
