@@ -2,14 +2,14 @@
 FROM --platform=linux/amd64 node:alpine
 
 # Set the working directory to /app
-WORKDIR /app
+WORKDIR /usr/src/app
 
 # Copy the package.json and package-lock.json files to the container
-COPY package*.json .
+COPY package.json .
 
 
 # This ensures dev dependencies are not run on our docker image creation
-RUN npm install 
+RUN npm install --only=prod
 
 # Install PM2 globally
 RUN npm install -g pm2
