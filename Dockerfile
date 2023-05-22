@@ -2,7 +2,7 @@
 FROM --platform=linux/amd64 node:alpine
 
 # Set the working directory to /app
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # Copy the package.json and package-lock.json files to the container
 COPY package.json .
