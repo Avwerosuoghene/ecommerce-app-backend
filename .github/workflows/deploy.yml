@@ -27,7 +27,7 @@ jobs:
         # run: docker login --username ${{ secrets.DOCKER_USERNAME}} --password ${{ secrets.DOCKER_USERNAME}}
         run: | 
         
-          docker build -t kesuion/ecommerce-backend-app
+          docker build -t kesuion/ecommerce-backend-app .
           docker push kesuion/ecommerce-backend-app
 
         # with:
