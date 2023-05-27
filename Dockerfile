@@ -24,5 +24,7 @@ EXPOSE 9000
 
 # Start the application
 # CMD ["npm","run", "start-pm2"]
-CMD pm2-runtime start ecosystem.config.js
+CMD pm2-docker start ecosystem.config.js
+
+
 
