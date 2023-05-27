@@ -5,10 +5,10 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "NODE_ENV=prod ts-node-dev src/index.ts",
+    "start": "NODE_ENV=prod ts-node-dev src/index.js",
     "start-dev": "NODE_ENV=dev ts-node-dev src/index.ts",
-    "start-pm2": "pm2-runtime start ecosystem.config.js ",
-    "build": "npx tsc"
+    "start-pm2": "pm2-runtime start ecosystem.config.js",
+    "build": "node remove-dist.js && npx tsc"
   },
   "author": "",
   "license": "ISC",

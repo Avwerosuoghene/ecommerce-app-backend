@@ -22,7 +22,7 @@ RUN npm run build
 # Expose the port that the application listens on
 EXPOSE 9000
 
-
 # Start the application
-CMD ["npm","run", "start-pm2"]
+# CMD ["npm","run", "start-pm2"]
+CMD pm2-runtime start ecosystem.config.js
 
