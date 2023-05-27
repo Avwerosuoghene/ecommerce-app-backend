@@ -19,8 +19,8 @@ jobs:
       - name: Buld and push Docker images
         # uses: docker/build-push-action@v2
         run: | 
-        docker build -t kesuion/ecommerce-backend-app
-        docker push kesuion/ecommerce-backend-app
+          docker build -t kesuion/ecommerce-backend-app
+          docker push kesuion/ecommerce-backend-app
 
         with:
           username: ${{ secrets.DOCKER_USERNAME}}
