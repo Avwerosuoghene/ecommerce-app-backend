@@ -10,6 +10,13 @@ export interface UserI {
       createdAt: string;
       updatedAt: string;
     };
+    cart: Array<cartI>
+  }
+
+  export interface cartI {
+    product: Object;
+    quantity: number;
+    _id: string
   }
   
   export interface currentUserI {

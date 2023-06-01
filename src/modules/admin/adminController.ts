@@ -6,7 +6,6 @@ export class AdminController {
   static postProduct(req: Request, res: Response, next: NextFunction) {
 
     (async () => {
-      // console.log('here')
       try {
         const featuresArray = JSON.parse(req.body.features);
         const { message, id } = await AdminService.postProduct(
@@ -68,5 +67,18 @@ export class AdminController {
           next(err);
         }
       })();
+    }
+
+    static async getCurrentUser (req: Request, res: Response, next: NextFunction) {
+
+      try {
+        const {message, userInfo} = await AdminService.fetchUser( req.currentUser);
+        return succesHandler(res, 200, message, userInfo, true)
+      } catch (err: any) {
+        if (!err.statusCode) {
+          err.statusCode = 500;
+        }
+        next(err);
+      }
     }
 }

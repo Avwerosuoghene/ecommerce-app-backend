@@ -1,3 +1,5 @@
+import { cartI, UserI } from "./models";
+
 export interface CustomError {
     message: string;
     statusCode: number | undefined;
@@ -21,6 +23,15 @@ export interface CustomError {
     message: string,
     id?: string,
     isSuccess: boolean
+  }
+
+
+  export interface fetchloggedinUser extends isSuccessI {
+    userInfo:  Omit<UserI, "timestamps" | "_id" | "password" | "cart">
+  }
+
+  export interface fetchCart extends isSuccessI {
+    cart: Array<cartI>
   }
   
   export interface isLoginIsSuccessI extends isSuccessI {

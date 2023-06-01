@@ -1,5 +1,4 @@
 import { body } from "express-validator";
-import { Product } from "../database/models";
 
 export const adminValidator = {
   postProduct: [

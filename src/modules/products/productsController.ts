@@ -37,7 +37,6 @@ export class ProductsController {
 
   static getProductsByUserId (req: Request, res: Response, next: NextFunction) {
     (async () =>  {
-        // console.log( req.query.userId)
         try {
             const { message, isSuccess, data } =
             await ProductsService.getProductByUserId(req.query.userId);

@@ -3,7 +3,7 @@ import nodemailer from "nodemailer";
 import { comparePassword, hashPassword } from "../../helpers/auth";
 import { configuration } from "../../config/appconfig";
 import dotenv from "dotenv";
-import { IConfigurables, UserI } from "../../database/types/models";
+import {  IConfigurables, UserI } from "../../database/types/models";
 import { User } from "../../database/models";
 import { logingPayload, signUpPayload, resetPassPayload } from "../../database/types/payloads";
 import { isSuccessI, isLoginIsSuccessI, ModError } from "../../database/types/handlers";
@@ -38,7 +38,8 @@ export class AuthService {
             email: email,
             password: hashedPw,
             name: name,
-            userType : reqUserType
+            userType : reqUserType,
+            cart: []
           });
           const result = await user.save();
     
@@ -119,6 +120,7 @@ export class AuthService {
             isSuccess: true,
         }
     }
+
 }
     
 

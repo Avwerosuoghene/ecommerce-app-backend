@@ -20,6 +20,13 @@ router.put(
   validationHandler,
   AdminController.editProduct
 );
+
+router.get(
+  "/admin/currentUser",
+  verifyToken,
+  AdminController.getCurrentUser
+);
+
 router.delete("/admin/product/:id", verifyToken, AdminController.deleteProduct);
 
 export default router;

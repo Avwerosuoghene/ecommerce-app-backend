@@ -18,7 +18,18 @@ const userSchema = new Schema<UserI>({
     userType: {
         type: String,
         required: true
-    }
+    },
+    cart: [{
+        product: {
+          type:  Schema.Types.ObjectId,
+          ref: 'Product',
+          required: true,
+        },
+        quantity: {
+          type: Number,
+          default: 1,
+        },
+      }],
 }, 
  {
     timestamps: {createdAt: 'createdAt', updatedAt: 'updatedAt'}
