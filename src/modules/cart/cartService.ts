@@ -102,4 +102,23 @@ export class CartService {
       isSuccess: true,
     };
   }
+
+  static async clearFromCart(
+    currentUser: currentUserI,
+  ): Promise<isSuccessI> {
+    const currentUserInfo = await User.findById(currentUser.id).select("cart")
+    
+    if (!currentUserInfo) {
+      const error = new ModError("No user found");
+      error.statusCode = 404;
+      throw error;
+    }
+
+    currentUserInfo.cart = []
+    await currentUserInfo.save();
+    return {
+      message: "Cart cleared succesfully",
+      isSuccess: true,
+    };
+  }
 }

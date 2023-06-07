@@ -13,9 +13,9 @@ export const adminValidator = {
       .isFloat()
       .withMessage("price must be a float number"),
     body("featuresDescription")
-    .trim()
-    .isLength({ min: 3 })
-    .withMessage("features description must be at least 3 characters"),
+      .trim()
+      .isLength({ min: 3 })
+      .withMessage("features description must be at least 3 characters"),
     body("category")
       .trim()
       .not()
@@ -34,16 +34,18 @@ export const adminValidator = {
         if (!features || features.length <= 0) {
           throw new Error("Invalid features array");
         }
-        const isValid = featuresArray.every((feature: {name: string, quantity: Number}) => {
-            return feature.name && feature.quantity
-        })
+        const isValid = featuresArray.every(
+          (feature: { name: string; quantity: Number }) => {
+            return feature.name && feature.quantity;
+          }
+        );
         if (!isValid) {
           throw new Error("Invalid features array");
         }
         return true;
       }),
-  
-    body("userId").not().isEmpty().withMessage("UserId cannot be empty")
+
+    body("userId").not().isEmpty().withMessage("UserId cannot be empty"),
   ],
 
   editProduct: [
@@ -58,9 +60,9 @@ export const adminValidator = {
       .isFloat()
       .withMessage("price must be a float number"),
     body("featuresDescription")
-    .trim()
-    .isLength({ min: 3 })
-    .withMessage("features description must be at least 3 characters"),
+      .trim()
+      .isLength({ min: 3 })
+      .withMessage("features description must be at least 3 characters"),
     body("category")
       .trim()
       .not()
@@ -79,14 +81,21 @@ export const adminValidator = {
         if (!features || features.length <= 0) {
           throw new Error("Invalid features array");
         }
-        const isValid = featuresArray.every((feature: {name: string, quantity: Number}) => {
-            return feature.name && feature.quantity
-        })
+        const isValid = featuresArray.every(
+          (feature: { name: string; quantity: Number }) => {
+            return feature.name && feature.quantity;
+          }
+        );
         if (!isValid) {
           throw new Error("Invalid features array");
         }
         return true;
-      })
-  
-  ]
+      }),
+  ],
+
+  updateUser: [
+    body("name").not().isEmpty().withMessage("name field cannot be empty"),
+    body("email").not().isEmpty().withMessage("email field cannot be empty"),
+    body("name").not().isEmpty().withMessage("address field cannot be empty"),
+  ],
 };

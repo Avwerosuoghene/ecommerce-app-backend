@@ -21,12 +21,18 @@ router.put(
   AdminController.editProduct
 );
 
-router.get(
-  "/admin/currentUser",
-  verifyToken,
-  AdminController.getCurrentUser
-);
+router.get("/admin/currentUser", verifyToken, AdminController.getCurrentUser);
 
 router.delete("/admin/product/:id", verifyToken, AdminController.deleteProduct);
+
+router.put(
+  "/admin/currentUser",
+  verifyToken,
+  adminValidator.updateUser,
+  validationHandler,
+  AdminController.updateUserProfile
+);
+
+router.post("/admin/createOrder", verifyToken, AdminController.createOrder)
 
 export default router;

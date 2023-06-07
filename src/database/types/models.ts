@@ -10,7 +10,10 @@ export interface UserI {
       createdAt: string;
       updatedAt: string;
     };
-    cart: Array<cartI>
+    address: string,
+    cart: Array<cartI>,
+    image: string,
+    phone: string
   }
 
   export interface cartI {

@@ -2,12 +2,13 @@ import { clear } from "console";
 import { features } from "process";
 import { Product, User } from "../../database/models";
 import {
+  fetchCart,
   fetchloggedinUser,
   getRequestSuccess,
   isSuccessI,
   ModError,
 } from "../../database/types/handlers";
-import { currentUserI } from "../../database/types/models";
+import { currentUserI, UserI } from "../../database/types/models";
 import {
   getProductsResponse,
   postProductPayload,
@@ -130,11 +131,70 @@ export class AdminService {
       error.statusCode = 404;
       throw error;
     }
-    const { email, name, userType } = currentUserInfo;
+    const { email, name, userType, image, address, phone } = currentUserInfo;
     return {
       message: "User fetched succesfully",
       isSuccess: true,
-      userInfo: { email, name, userType },
+      userInfo: { email, name, userType,image, address, phone },
     };
+  }
+  static async updateProfile(
+    currentUser: currentUserI,
+    uploadedFile: any | undefined,
+    updatedInfo: Pick<UserI, 'email'|'name' | 'address'>  & {remove: string}
+  ):Promise<isSuccessI>  {
+    const currentUserInfo = await User.findById(currentUser.id);
+
+    if (!currentUserInfo) {
+      const error = new ModError("No user found");
+      error.statusCode = 404;
+      throw error;
+    }
+    currentUserInfo.email =  updatedInfo.email;
+    currentUserInfo.name = updatedInfo.name;
+    currentUserInfo.address = updatedInfo.address;
+
+
+    if (updatedInfo.remove  ) {
+      currentUserInfo.image = ''
+    }
+
+    else if (uploadedFile && currentUserInfo.image ) {
+      clearImage(currentUserInfo.image);
+      currentUserInfo.image = uploadedFile.path;
+    } else {
+      currentUserInfo.image = uploadedFile.path;
+    };
+
+    currentUserInfo.save()
+
+    return {
+      message: "Profile updated succesfully",
+      isSuccess: true,
+    };
+  }
+
+  static async createOrder(currentUser: currentUserI):Promise<fetchCart> {
+    const currentUserInfo = await User.findById(currentUser.id)
+    .select("cart")
+    .populate({
+      path:'cart.product',
+      select:'title price image'
+ });
+
+    if (!currentUserInfo) {
+      const error = new ModError("No user found");
+      error.statusCode = 404;
+      throw error;
+    }
+    const cartItems = currentUserInfo.cart;
+    console.log(currentUserInfo)
+    currentUserInfo.cart = [];
+    await currentUserInfo.save()
+    return {
+      message: "Order placed succesfully",
+      cart: cartItems,
+      isSuccess: true,
+    }
   }
 }

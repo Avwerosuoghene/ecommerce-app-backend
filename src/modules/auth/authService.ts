@@ -39,7 +39,10 @@ export class AuthService {
             password: hashedPw,
             name: name,
             userType : reqUserType,
-            cart: []
+            cart: [],
+            image: '',
+            address: '',
+            phone: ''
           });
           const result = await user.save();
     

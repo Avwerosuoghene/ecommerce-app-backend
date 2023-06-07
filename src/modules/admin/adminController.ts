@@ -14,7 +14,7 @@ export class AdminController {
           req.currentUser,
           featuresArray
         );
-        return succesHandler(res, 201, message, id, true);
+        return succesHandler(res, 201, message,  true, id);
       } catch (err: any) {
         if (!err.statusCode) {
           err.statusCode = 500;
@@ -37,7 +37,7 @@ export class AdminController {
           featuresArray,
           productId
         );
-        return succesHandler(res, 201, message, id, true);
+        return succesHandler(res, 201, message,  true, id);
       } catch (err: any) {
         if (!err.statusCode) {
           err.statusCode = 500;
@@ -58,7 +58,7 @@ export class AdminController {
             req.currentUser,
             productId
           );
-          return succesHandler(res, 200, message, id, true);
+          return succesHandler(res, 200, message,  true, id);
         } catch (err: any) {
           if (!err.statusCode) {
             err.statusCode = 500;
@@ -73,7 +73,31 @@ export class AdminController {
 
       try {
         const {message, userInfo} = await AdminService.fetchUser( req.currentUser);
-        return succesHandler(res, 200, message, userInfo, true)
+        return succesHandler(res, 200, message,  true, userInfo)
+      } catch (err: any) {
+        if (!err.statusCode) {
+          err.statusCode = 500;
+        }
+        next(err);
+      }
+    }
+
+    static async updateUserProfile (req: Request, res: Response, next: NextFunction)  {
+      try {
+        const {message} = await AdminService.updateProfile( req.currentUser, req.file!,req.body);
+        return succesHandler(res, 200, message, true)
+      } catch (err: any) {
+        if (!err.statusCode) {
+          err.statusCode = 500;
+        }
+        next(err);
+      }
+    }
+
+    static async createOrder (req: Request, res: Response, next: NextFunction) {
+      try {
+        const {message, cart} = await AdminService.createOrder( req.currentUser);
+        return succesHandler(res, 200, message, true, cart)
       } catch (err: any) {
         if (!err.statusCode) {
           err.statusCode = 500;
