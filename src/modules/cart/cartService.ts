@@ -1,7 +1,7 @@
 import { NextFunction } from "express";
 import { Product, User } from "../../database/models";
 import { fetchCart, isSuccessI, ModError } from "../../database/types/handlers";
-import { cartI, currentUserI } from "../../database/types/models";
+import { cartI, cartType, currentUserI } from "../../database/types/models";
 
 export class CartService {
   static async fetchCart(currentUser: currentUserI): Promise<fetchCart> {
@@ -30,6 +30,8 @@ export class CartService {
     addToCartPayload: Array<cartI>
   ): Promise<isSuccessI> {
     const currentUserInfo = await User.findById(currentUser.id);
+
+
     
     if (!currentUserInfo) {
       const error = new ModError("No user found");
@@ -41,17 +43,19 @@ export class CartService {
       [key: string]: {quantity: number, index: number} ,
      } = {};
 
+  
   for (let [index,existingCartItem] of currentUserInfo.cart.entries()) {
-    let id = existingCartItem.product.toString()
+
+    let id = existingCartItem.product.toString();
     existingCartItemsFound![id] = {quantity: existingCartItem.quantity, index:index } 
 
   }
 
     let productError = undefined;
     const iterationOverItem = async () => {
-      let iterationChecker = {}
       for (const cartItem of addToCartPayload) {
         let product;
+
         try {
           product = await Product.findById(cartItem.product);
         } catch (error) { 
@@ -62,10 +66,17 @@ export class CartService {
           throw err;
         }
 
-          if (existingCartItemsFound.hasOwnProperty(cartItem.product.toString())) {
+        const propertyExists = existingCartItemsFound.hasOwnProperty(cartItem.product.toString());
+
+          if (propertyExists && cartItem.type === cartType.bulk) {
             const index = existingCartItemsFound[cartItem.product.toString()].index;
             currentUserInfo.cart[index].quantity = cartItem.quantity;
-        } else {
+        } 
+        else if (propertyExists && cartItem.type === cartType.single){
+          const index = existingCartItemsFound[cartItem.product.toString()].index;
+          currentUserInfo.cart[index].quantity = currentUserInfo.cart[index].quantity + cartItem.quantity ;
+        }
+        else {
           currentUserInfo.cart.push(cartItem)
         }
        
@@ -74,12 +85,15 @@ export class CartService {
       }
     };
 
+
     await iterationOverItem();
 
     await currentUserInfo.save();
     return {
       message: "Cart updated succesfully",
+      id: currentUserInfo._id,
       isSuccess: true,
+
     };
   }
 
@@ -119,6 +133,7 @@ export class CartService {
     return {
       message: "Cart cleared succesfully",
       isSuccess: true,
+   
     };
   }
 }

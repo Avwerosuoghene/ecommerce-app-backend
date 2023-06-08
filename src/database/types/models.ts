@@ -19,7 +19,8 @@ export interface UserI {
   export interface cartI {
     product: Object;
     quantity: number;
-    _id: string
+    _id: string;
+    type: cartType
   }
   
   export interface currentUserI {
@@ -45,3 +46,8 @@ export interface UserI {
       [key: string]: string;
     };
   }
+
+  export enum cartType {
+    single = 1,
+    bulk = 2
+}

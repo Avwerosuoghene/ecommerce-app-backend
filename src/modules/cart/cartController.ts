@@ -22,11 +22,11 @@ export class CartController {
   static addToCart(req: Request, res: Response, next: NextFunction) {
     (async () => {
       try {
-        const { message, id } = await CartService.addToCart(
+        const { message, id,isSuccess, } = await CartService.addToCart(
           req.currentUser,
           req.body.cart
         );
-        return succesHandler(res, 201, message, true, id);
+        return succesHandler(res, 201, message, isSuccess, id);
       } catch (err: any) {
         if (!err.statusCode) {
           err.statusCode = 500;

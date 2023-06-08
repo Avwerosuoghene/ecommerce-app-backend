@@ -17,15 +17,15 @@ const userSchema = new Schema<UserI>({
     },
     address: {
         type: String,
-        required: true
+        required: false
     },
     image: {
         type: String,
-        required: true,
+        required: false,
       },
       phone: {
         type: String,
-        required: true,
+        required: false,
       },
     userType: {
         type: String,
