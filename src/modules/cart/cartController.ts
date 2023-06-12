@@ -7,8 +7,8 @@ export class CartController {
   static getCart(req: Request, res: Response, next: NextFunction) {
     (async () => {
       try {
-        const { message, cart } = await CartService.fetchCart(req.currentUser);
-        return succesHandler(res, 200, message, true, cart);
+        const { message, cart, total } = await CartService.fetchCart(req.currentUser);
+        return succesHandler(res, 200, message, true, {cart, total});
       } catch (err: any) {
         if (!err.statusCode) {
           err.statusCode = 500;

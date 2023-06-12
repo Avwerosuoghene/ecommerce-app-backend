@@ -5,31 +5,38 @@ import { cartI, cartType, currentUserI } from "../../database/types/models";
 
 export class CartService {
   static async fetchCart(currentUser: currentUserI): Promise<fetchCart> {
-    const cart: Array<cartI> | null = await User.findById(currentUser.id)
+    const receivedCartObject: {cart: Array<cartI>, _id: String} | null = await User.findById(currentUser.id)
       .select("cart")
       .populate({
         path:'cart.product',
         select:'title price image'
    });
-
-
+   const cart:  Array<cartI> | [] = receivedCartObject? receivedCartObject.cart : [];
     if (!cart) {
       const error = new ModError("No cart found for user");
       error.statusCode = 404;
       throw error;
     }
+    let totalAmount = 0;
+    for (let i=0; i < cart.length; i++) {
+      totalAmount += cart[i].sum
+    }
     return {
       message: "Cart fetched succesfully",
       isSuccess: true,
       cart,
+      total: totalAmount
     };
   }
 
   static async addToCart(
     currentUser: currentUserI,
-    addToCartPayload: Array<cartI>
+    addToCartPayload: Array<Omit <cartI, 'sum' >>
   ): Promise<isSuccessI> {
-    const currentUserInfo = await User.findById(currentUser.id);
+    const currentUserInfo = await User.findById(currentUser.id).populate({
+      path:'cart.product',
+ });
+
 
 
     
@@ -45,12 +52,10 @@ export class CartService {
 
   
   for (let [index,existingCartItem] of currentUserInfo.cart.entries()) {
-
-    let id = existingCartItem.product.toString();
+    let id = existingCartItem.product._id.toString();
     existingCartItemsFound![id] = {quantity: existingCartItem.quantity, index:index } 
-
+    console.log(existingCartItemsFound)
   }
-
     let productError = undefined;
     const iterationOverItem = async () => {
       for (const cartItem of addToCartPayload) {
@@ -71,13 +76,16 @@ export class CartService {
           if (propertyExists && cartItem.type === cartType.bulk) {
             const index = existingCartItemsFound[cartItem.product.toString()].index;
             currentUserInfo.cart[index].quantity = cartItem.quantity;
+            currentUserInfo.cart[index].sum = Number(product?.price) *  Number(currentUserInfo.cart[index].quantity)
         } 
         else if (propertyExists && cartItem.type === cartType.single){
           const index = existingCartItemsFound[cartItem.product.toString()].index;
-          currentUserInfo.cart[index].quantity = currentUserInfo.cart[index].quantity + cartItem.quantity ;
+          currentUserInfo.cart[index].quantity = currentUserInfo.cart[index].quantity + cartItem.quantity;
+          currentUserInfo.cart[index].sum = Number(product?.price) *  Number(currentUserInfo.cart[index].quantity)
         }
         else {
-          currentUserInfo.cart.push(cartItem)
+          const completeItem = {...cartItem, sum: Number(cartItem.quantity) * Number(product?.price)}
+          currentUserInfo.cart.push(completeItem)
         }
        
        
@@ -87,6 +95,7 @@ export class CartService {
 
 
     await iterationOverItem();
+
 
     await currentUserInfo.save();
     return {

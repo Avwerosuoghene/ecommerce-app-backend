@@ -1,5 +1,3 @@
-import { clear } from "console";
-import { features } from "process";
 import { Product, User } from "../../database/models";
 import {
   fetchCart,
@@ -188,13 +186,19 @@ export class AdminService {
       throw error;
     }
     const cartItems = currentUserInfo.cart;
-    console.log(currentUserInfo)
     currentUserInfo.cart = [];
-    await currentUserInfo.save()
+    await currentUserInfo.save();
+
+    let totalAmount = 0;
+    for (let i=0; i < cartItems.length; i++) {
+      totalAmount += cartItems[i].sum
+    }
+
     return {
       message: "Order placed succesfully",
       cart: cartItems,
       isSuccess: true,
+      total: totalAmount
     }
   }
 }

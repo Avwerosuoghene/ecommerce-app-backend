@@ -17,10 +17,11 @@ export interface UserI {
   }
 
   export interface cartI {
-    product: Object;
+    product: Pick<ProductI,'_id' | 'price' | 'title' | 'image' >;
     quantity: number;
     _id: string;
-    type: cartType
+    type: cartType,
+    sum: number
   }
   
   export interface currentUserI {

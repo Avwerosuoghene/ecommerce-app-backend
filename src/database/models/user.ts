@@ -41,6 +41,10 @@ const userSchema = new Schema<UserI>({
           type: Number,
           default: 1,
         },
+        sum: {
+          type: Number,
+          // default: 1
+        }
       }],
 }, 
  {

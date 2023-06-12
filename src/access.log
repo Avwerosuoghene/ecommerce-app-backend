@@ -53,3 +53,6 @@
 ::1 - - [07/Jun/2023:23:46:29 +0000] "GET /undefined HTTP/1.1" 404 148 "http://localhost:3000/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
 ::1 - - [07/Jun/2023:23:46:45 +0000] "GET /undefined HTTP/1.1" 404 148 "http://localhost:3000/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
 ::1 - - [07/Jun/2023:23:55:18 +0000] "GET /undefined HTTP/1.1" 404 148 "http://localhost:3000/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+::1 - - [09/Jun/2023:18:57:12 +0000] "GET /undefined HTTP/1.1" 404 148 "http://localhost:3000/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+::1 - - [09/Jun/2023:18:57:26 +0000] "GET /undefined HTTP/1.1" 404 148 "http://localhost:3000/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+::1 - - [12/Jun/2023:01:18:31 +0000] "GET /undefined HTTP/1.1" 404 148 "http://localhost:3000/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"

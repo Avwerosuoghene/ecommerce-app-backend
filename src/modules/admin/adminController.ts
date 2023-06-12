@@ -96,8 +96,8 @@ export class AdminController {
 
     static async createOrder (req: Request, res: Response, next: NextFunction) {
       try {
-        const {message, cart} = await AdminService.createOrder( req.currentUser);
-        return succesHandler(res, 200, message, true, cart)
+        const {message, cart, total} = await AdminService.createOrder( req.currentUser);
+        return succesHandler(res, 200, message, true, {cart, total})
       } catch (err: any) {
         if (!err.statusCode) {
           err.statusCode = 500;

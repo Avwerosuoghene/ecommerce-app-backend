@@ -31,7 +31,8 @@ export interface CustomError {
   }
 
   export interface fetchCart extends isSuccessI {
-    cart: Array<cartI>
+    cart: Array<cartI>,
+    total: number
   }
   
   export interface isLoginIsSuccessI extends isSuccessI {
