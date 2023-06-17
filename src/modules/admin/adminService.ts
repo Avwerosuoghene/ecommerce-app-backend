@@ -139,7 +139,7 @@ export class AdminService {
   static async updateProfile(
     currentUser: currentUserI,
     uploadedFile: any | undefined,
-    updatedInfo: Pick<UserI, 'email'|'name' | 'address'>  & {remove: string}
+    updatedInfo: Pick<UserI, 'email'|'name' | 'address' | 'phone'>  & {remove: string }
   ):Promise<isSuccessI>  {
     const currentUserInfo = await User.findById(currentUser.id);
 
@@ -151,18 +151,21 @@ export class AdminService {
     currentUserInfo.email =  updatedInfo.email;
     currentUserInfo.name = updatedInfo.name;
     currentUserInfo.address = updatedInfo.address;
+    currentUserInfo.phone = updatedInfo.phone;
+    updatedInfo.remove = JSON.parse(updatedInfo.remove)
 
-
+ 
     if (updatedInfo.remove  ) {
       currentUserInfo.image = ''
     }
 
-    else if (uploadedFile && currentUserInfo.image ) {
+    else if (uploadedFile && currentUserInfo.image  ) {
       clearImage(currentUserInfo.image);
       currentUserInfo.image = uploadedFile.path;
-    } else {
+    } else if (uploadedFile && !currentUserInfo.image ) {
       currentUserInfo.image = uploadedFile.path;
     };
+
 
     currentUserInfo.save()
 

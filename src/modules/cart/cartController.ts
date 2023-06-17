@@ -24,7 +24,7 @@ export class CartController {
       try {
         const { message, id,isSuccess, } = await CartService.addToCart(
           req.currentUser,
-          req.body.cart
+          req.body
         );
         return succesHandler(res, 201, message, isSuccess, id);
       } catch (err: any) {

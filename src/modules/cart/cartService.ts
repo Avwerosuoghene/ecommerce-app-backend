@@ -31,11 +31,12 @@ export class CartService {
 
   static async addToCart(
     currentUser: currentUserI,
-    addToCartPayload: Array<Omit <cartI, 'sum' >>
+    addToCartPayload: {cart: Array<Omit <cartI, 'sum' >>, type: cartType }
   ): Promise<isSuccessI> {
     const currentUserInfo = await User.findById(currentUser.id).populate({
       path:'cart.product',
  });
+ 
 
 
 
@@ -50,6 +51,8 @@ export class CartService {
       [key: string]: {quantity: number, index: number} ,
      } = {};
 
+    //  const cartType = currentUserInfo.cart.type
+
   
   for (let [index,existingCartItem] of currentUserInfo.cart.entries()) {
     let id = existingCartItem.product._id.toString();
@@ -58,7 +61,7 @@ export class CartService {
   }
     let productError = undefined;
     const iterationOverItem = async () => {
-      for (const cartItem of addToCartPayload) {
+      for (const cartItem of addToCartPayload.cart) {
         let product;
 
         try {
@@ -71,14 +74,17 @@ export class CartService {
           throw err;
         }
 
+     
         const propertyExists = existingCartItemsFound.hasOwnProperty(cartItem.product.toString());
+        console.log(propertyExists)
+        
 
-          if (propertyExists && cartItem.type === cartType.bulk) {
+          if (propertyExists && addToCartPayload.type === cartType.bulk) {
             const index = existingCartItemsFound[cartItem.product.toString()].index;
             currentUserInfo.cart[index].quantity = cartItem.quantity;
             currentUserInfo.cart[index].sum = Number(product?.price) *  Number(currentUserInfo.cart[index].quantity)
         } 
-        else if (propertyExists && cartItem.type === cartType.single){
+        else if (propertyExists && addToCartPayload.type === cartType.single){
           const index = existingCartItemsFound[cartItem.product.toString()].index;
           currentUserInfo.cart[index].quantity = currentUserInfo.cart[index].quantity + cartItem.quantity;
           currentUserInfo.cart[index].sum = Number(product?.price) *  Number(currentUserInfo.cart[index].quantity)

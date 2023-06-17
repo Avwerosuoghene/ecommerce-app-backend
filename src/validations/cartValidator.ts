@@ -22,7 +22,7 @@ export const cartValidator = {
         return true;
       }),
    ] ,
-   removeFromCart: [
-    body('id').not().isEmpty().withMessage("Id cannot be empty")
-   ]
+  //  removeFromCart: [
+  //   body('id').not().isEmpty().withMessage("Id cannot be empty")
+  //  ]
 }

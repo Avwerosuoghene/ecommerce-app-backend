@@ -11,7 +11,7 @@ export interface UserI {
       updatedAt: string;
     };
     address: string,
-    cart: Array<cartI>,
+    cart: Array<cartI> ,
     image: string,
     phone: string
   }
