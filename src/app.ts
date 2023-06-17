@@ -64,7 +64,6 @@ app.use(
 
 app.use(
   (error: CustomError, req: Request, res: Response, next: NextFunction) => {
-    // console.log(error)
     const status = error.statusCode || 500;
     const message = error.message;
     const data = error.data;

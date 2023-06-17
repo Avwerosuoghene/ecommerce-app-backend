@@ -8,7 +8,7 @@ export class ProductsController {
       try {
         const { message, isSuccess, data } =
           await ProductsService.getProducts();
-        return succesHandler(res, 200, message, data, isSuccess);
+        return succesHandler(res, 200, message,  isSuccess, data);
       } catch (err: any) {
         if (!err.statusCode) {
           err.statusCode = 500;
@@ -24,7 +24,7 @@ export class ProductsController {
         try {
             const { message, isSuccess, data } =
             await ProductsService.getProductById(req.params.id);
-          return succesHandler(res, 200, message, data, isSuccess);
+          return succesHandler(res, 200, message, isSuccess, data);
         } catch(err: any) {
             if (!err.statusCode) {
                 err.statusCode = 500;
@@ -37,11 +37,10 @@ export class ProductsController {
 
   static getProductsByUserId (req: Request, res: Response, next: NextFunction) {
     (async () =>  {
-        // console.log( req.query.userId)
         try {
             const { message, isSuccess, data } =
             await ProductsService.getProductByUserId(req.query.userId);
-          return succesHandler(res, 200, message, data, isSuccess);
+          return succesHandler(res, 200, message, isSuccess, data);
         } catch(err: any) {
             if (!err.statusCode) {
                 err.statusCode = 500;

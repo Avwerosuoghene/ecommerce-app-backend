@@ -10,6 +10,18 @@ export interface UserI {
       createdAt: string;
       updatedAt: string;
     };
+    address: string,
+    cart: Array<cartI> ,
+    image: string,
+    phone: string
+  }
+
+  export interface cartI {
+    product: Pick<ProductI,'_id' | 'price' | 'title' | 'image' >;
+    quantity: number;
+    _id: string;
+    type: cartType,
+    sum: number
   }
   
   export interface currentUserI {
@@ -35,3 +47,8 @@ export interface UserI {
       [key: string]: string;
     };
   }
+
+  export enum cartType {
+    single = 1,
+    bulk = 2
+}

@@ -15,10 +15,37 @@ const userSchema = new Schema<UserI>({
         type: String,
         required: true
     },
+    address: {
+        type: String,
+        required: false
+    },
+    image: {
+        type: String,
+        required: false,
+      },
+      phone: {
+        type: String,
+        required: false,
+      },
     userType: {
         type: String,
         required: true
-    }
+    },
+    cart: [{
+        product: {
+          type:  Schema.Types.ObjectId,
+          ref: 'Product',
+          required: true,
+        },
+        quantity: {
+          type: Number,
+          default: 1,
+        },
+        sum: {
+          type: Number,
+          // default: 1
+        }
+      }],
 }, 
  {
     timestamps: {createdAt: 'createdAt', updatedAt: 'updatedAt'}

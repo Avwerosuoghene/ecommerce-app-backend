@@ -10,7 +10,7 @@ export class AuthController {
         try {
          
          const {message, id} = await  AuthService.signUp(req.body);
-         return succesHandler(res, 201, message, id, true);
+         return succesHandler(res, 201, message, true, id);
 
         } catch (err: any) {
           if (!err.statusCode) {
@@ -28,7 +28,7 @@ export class AuthController {
       try {
         const {message, id, token, userType} = await AuthService.login(req.body);
         const loginData = {token, id, userType}
-        return succesHandler(res, 200, message, loginData, true)
+        return succesHandler(res, 200, message,  true, loginData)
       } catch (err: any) {
         if (!err.statusCode) {
           err.statusCode = 500;
@@ -52,7 +52,7 @@ export class AuthController {
       try {
         const {message, id } = await AuthService.passwordReset(req.body)
         
-        return succesHandler(res, 200, message, id, true)
+        return succesHandler(res, 200, message,  true, id)
       } catch (err: any) {
         if (!err.statusCode) {
           err.statusCode = 500;
@@ -60,4 +60,6 @@ export class AuthController {
         return next(err);
       }
     }
+
+
   }

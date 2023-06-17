@@ -1,5 +1,5 @@
 import { postProduct } from "./handlers";
-import { ProductI } from "./models";
+import { cartI, ProductI } from "./models";
 
 
 
@@ -22,10 +22,10 @@ export interface logingPayload {
   export interface postProductPayload extends postProduct{
 
   }
+
+
   
-  interface JwtPayload {
-    id: string;
-  }
+
 
   export type getProductsResponse = Array <Pick<ProductI, "title" | "image" | "price" | "_id" | "rating" | "reviews">>
   export type getProductById = Omit<ProductI,"userId"|"timestamps" >
