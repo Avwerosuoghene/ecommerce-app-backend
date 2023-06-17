@@ -6,6 +6,7 @@ import helmet from "helmet";
 import compression from "compression";
 import morgan from "morgan";
 import fs from "fs";
+import cors from 'cors';
 
 
 import modules from "./modules";
@@ -15,7 +16,17 @@ import multer from "multer";
 import { CustomError } from "./database/types/handlers";
 import { fstat } from "fs";
 
+
+
 const app = express();
+
+const allowedOrigins = ['http://localhost:3000','https://ecommerce-app-69a42.web.app/'];
+
+const options: cors.CorsOptions = {
+  origin: allowedOrigins
+};
+
+app.use(cors(options));
 
 
 
