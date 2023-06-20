@@ -26,7 +26,7 @@ const options: cors.CorsOptions = {
   origin: allowedOrigins
 };
 
-app.use(cors(options));
+// app.use(cors(options));
 
 
 
